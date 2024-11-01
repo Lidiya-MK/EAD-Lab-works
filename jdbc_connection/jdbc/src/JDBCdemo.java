@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 
 
-public class jdbc{
+public class JDBCdemo{
 
 
     static final String DB_URL= "jdbc:mysql://localhost:3306/student";
@@ -29,7 +29,21 @@ public class jdbc{
             System.out.println(studentName);
 
 ;            
+
         }
+
+        String createTableSQL = "CREATE TABLE teachers ("
+        + "id INT AUTO_INCREMENT PRIMARY KEY,"
+        + "first_name VARCHAR(255),"
+        + "last_name VARCHAR(255),"
+        + "school VARCHAR(255),"
+        + "hire_date DATE,"
+        + "salary DECIMAL(10, 2))";
+statement.executeUpdate(createTableSQL);
+System.out.println("Table 'teachers' created successfully");
+
+// Closing the connection
+connection.close();
 
 
 
