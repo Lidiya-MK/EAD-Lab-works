@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body class="container-fluid card mt-5 p-4" style="width:40rem;">
+    <h2 class="bg-danger text-white text-center">Book Registration</h2>
+    <form action="register" method="post">
+        <table class="table table-hover">
+            <tr>
+                <td>Book Name</td>
+                <td><input type="text" name="bookName" required class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Book Edition</td>
+                <td><input type="text" name="bookEdition" required class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Book Price</td>
+                <td><input type="text" name="bookPrice" required class="form-control"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Register" class="btn btn-primary"></td>
+                <td><input type="reset" value="Cancel" class="btn btn-secondary"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
