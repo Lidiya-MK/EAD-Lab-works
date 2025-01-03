@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="dbConnectionManager" class="com.exam.ead.DBConnectionManager" />
+
+    <bean id="bookRegistrationServlet" class="com.exam.ead.BookRegistrationServlet">
+        <property name="db" ref="dbConnectionManager" />
+    </bean>
+
+    <bean id="displayBooksServlet" class="com.exam.ead.DisplayBooksServlet">
+        <property name="db" ref="dbConnectionManager" />
+    </bean>
+
+    <bean id="deleteBookServlet" class="com.exam.ead.DeleteBookServlet">
+        <property name="db" ref="dbConnectionManager" />
+    </bean>
+
+    <bean id="searchBooksServlet" class="com.exam.ead.SearchBooksServlet">
+        <property name="db" ref="dbConnectionManager" />
+    </bean>
+
+    <bean id="logging" class="com.exam.ead.LoggingAspect"></bean>
+
+    <context:annotation-config />
+    <context:component-scan base-package="com.exam.ead.aspect" />
+    <aop:aspectj-autoproxy />
+</beans>

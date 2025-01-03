@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .container{
+        display: flex;
+        gap: 10px;
+      }
+
+      .butn-01{
+background-color: antiquewhite;
+      }
+      .butn-02{
+        background-color: aqua;
+
+      }
+    </style>
+
+      
+
+  </head>
+  <body>
+
+    <h1> Welcome to my online Bookstore</h1>
+    <div class=" container">
+      <a href="/bookStore/books/addBook">
+        <button class="butn-01">
+          <h2>Click here to Add a Book</h2>
+        </button>
+      </a>
+
+   
+
+      <a href="/bookStore/books/displayBooks">
+        <button class="butn-02">
+          <h2>Click here to view added books</h2>
+        </button>
+      </a>
+
+      
+    </div>
+      <form action="/bookStore/books/deleteBook" method="post">
+        <h2>Delete Books</h2>
+        <label for="bookID">Book ID:</label>
+        <input type="text" id="bookID" name="id" />
+        <input type="submit" value="Delete" />
+      </form>
+
+      <hr />
+
+      <form action="/bookStore/books/searchBooks" method="get">
+        <h2>Search for Books</h2>
+        <label for="searchTerm">Search Term:</label>
+        <input type="text" id="searchTerm" name="author" />
+        <input type="submit" value="Search" />
+      </form>
+  
+  </body>
+</html>
