@@ -19,20 +19,21 @@ Vocation is a job portal application designed to connect Freelancers and Job-pos
    cd EAD-Lab-works
 
 3. Run this command to switch to the project branch:
-4. 
+   
+
      ```bash
    git checkout EADProject
 
-5. You can find the **[application.properties](https://github.com/Lidiya-MK/EAD-Lab-works/tree/EADProject/src/main/resources)** in the `src/main/resources` folder. Make sure you set your correct MySQL db password before running the application.
+4. You can find the **[application.properties](https://github.com/Lidiya-MK/EAD-Lab-works/tree/EADProject/src/main/resources)** in the `src/main/resources` folder. Make sure you set your correct MySQL db password before running the application.
 
-6. Run your MySQL DB.
+5. Run your MySQL DB.
 
-7. Run the application using:
+6. Run the application using:
    
       ```bash
        mvn spring-boot:run
       
-8. Once you have the application running, you can access the pages using:
+7. Once you have the application running, you can access the pages using:
 
    ```bash
        localhost:8080
