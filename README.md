@@ -40,7 +40,7 @@ Vocation is a job portal application designed to connect Freelancers and Job-pos
       ```bash
        mvn spring-boot:run
       
-7. Once you have the application running, you can access the pages using:
+7. Once you have the application running, you can access the Landing page using the following URL. From there, you can navigate to other pages to access the features.
 
    ```bash
        localhost:8080
