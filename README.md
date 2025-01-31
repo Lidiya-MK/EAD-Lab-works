@@ -37,8 +37,6 @@ Vocation is a job portal application designed to connect Freelancers and Job-pos
 
    ```bash
        localhost:8080
-    
-
    
 
 ## Team Members
