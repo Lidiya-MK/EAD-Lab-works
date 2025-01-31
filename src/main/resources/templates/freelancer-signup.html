@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <script src="/scripts/toast.js"></script>
+    <title>Freelancer Signup</title>
+  </head>
+  <body class="bg-white min-h-screen flex flex-col justify-between">
+    <!-- Top Navigation Bar -->
+    <header class="px-6 py-4 gap-6 flex flex-nowrap">
+      <!-- Company Name and Menu Button -->
+      <div class="flex items-center justify-center mx-auto">
+        <img src="/assets/logo.png" alt="Vocation Logo" class="h-[68px]" />
+        <!-- Hamburger Icon for small screens -->
+        <button
+          id="menu-toggle"
+          class="text-2xl sm-md:hidden focus:outline-none"
+        >
+          ☰
+        </button>
+      </div>
+
+      <!-- Navigation Bar -->
+      <div
+        id="navbar"
+        class="sm-md:flex hidden w-full sm-md:w-[80%] h-auto sm-md:h-[50px] rounded-[50px] bg-[#6699A7]/[22%] flex-col sm-md:flex-row items-start sm-md:items-center justify-between px-6 py-8 mx-auto sm-md:transition-none transition-all duration-300"
+      >
+        <!-- Links -->
+        <nav
+          class="flex flex-col sm-md:flex-row sm-md:space-x-20 text-[#6F6C6C] text-[16px] space-y-4 sm-md:space-y-0 mt-4 sm-md:mt-0"
+        >
+          <a href="/" class="hover:underline">Home</a>
+          <a href="#" class="hover:underline">About Us</a>
+          <a href="#" class="hover:underline">Contact</a>
+        </nav>
+
+        <!-- Buttons -->
+        <div
+          class="flex flex-col sm-md:flex-row sm-md:space-x-4 mt-4 sm-md:mt-0 space-y-4 sm-md:space-y-0"
+        >
+          <!-- Login Button -->
+          <button
+            class="border-2 border-[#6EB0B6] text-black text-[15px] px-8 py-2 rounded-[25px] hover:bg-[#6EB0B6]/[10%]"
+            onclick="window.location.href='/auth/freelancers/login'"
+          >
+            Login
+          </button>
+          <!-- Signup Button -->
+          <button
+            class="bg-[#F0823E] text-white text-[15px] px-8 py-2 rounded-[25px] hover:bg-[#F0823E]/[80%]"
+          >
+            Signup
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex justify-center items-center">
+      <div class="flex justify-center items-center gap-10 w-full max-w-screen-md px-4 pb-6">
+        <div class="w-full sm:w-[50%] bg-[#6699A7]/[15%] rounded-2xl p-6 shadow-md">
+          <h2 class="text-center text-2xl font-light mb-4">Freelancer Sign Up</h2>
+          <form id="signup-form">
+            <!-- Name -->
+            <input
+              type="text"
+              id="name"
+              placeholder="Name"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Email -->
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Industry Dropdown -->
+            <select
+              id="industry"
+              class="w-full p-2 mb-3 bg-white rounded-lg text-gray-700 text-sm border border-gray-300"
+            >
+              <option value="" disabled selected>Select Industry</option>
+              <option value="Software Development">Software Development</option>
+              <option value="Design">Design</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Finance">Finance</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Education">Education</option>
+              <option value="Construction">Construction</option>
+              <option value="E-Commerce">E-Commerce</option>
+            </select>
+    
+            <!-- Skills -->
+            <div class="mb-2">
+              <div class="relative">
+                <div
+                  class="border border-gray-300 rounded-lg w-full p-2 mb-3 bg-white text-gray-700 text-sm flex justify-between items-center"
+                  id="skillsDropdown"
+                >
+                  <span>Select Skills</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3 w-3 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div
+                  id="skillsList"
+                  class="absolute left-0 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden z-10 max-h-32 overflow-y-auto"
+                >
+                  
+                  <div class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white">HTML</div>
+                  <div class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white">CSS</div>
+                  <div class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white">JavaScript</div>
+                  <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  Python
+                </div>
+                <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  Figma
+                </div>
+                <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  Blender
+                </div>
+                <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  React
+                </div>
+                <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  Prototyping
+                </div>
+                <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  Graphics Design
+                </div>
+                <div
+                  class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                >
+                  UX/UI design
+                </div>
+                
+              </div>
+              <div id="selectedSkillsContainer" class="mt-2 flex flex-wrap gap-1" style="margin-bottom:5px ;"></div>
+            </div>
+    
+            <!-- Password -->
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Confirm Password -->
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Confirm Password"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Location -->
+            <input
+              type="text"
+              id="location"
+              placeholder="Location"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Phone Number -->
+            <input
+              type="tel"
+              id="phoneNumber"
+              placeholder="Phone Number"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Resume Link -->
+            <input
+              type="url"
+              id="resumeLink"
+              placeholder="Resume Link"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            />
+    
+            <!-- Cover Letter -->
+            <textarea
+              type="text"
+              id="description"
+              placeholder="Tell us about youself"
+              class="w-full p-2 mb-3 bg-white rounded-lg placeholder-gray-500 text-sm"
+            ></textarea>
+    
+    
+
+            <!-- Employer / Freelancer Toggle -->
+            <div class="flex space-x-3 mb-4">
+              <button
+                type="button"
+                id="employer-btn"
+                class="w-1/2 border-2 border-[#F0823E] text-[#F0823E] py-2 text-sm rounded-[50px] hover:bg-[#F0823E]/10 transition"
+                onclick="window.location.href='/auth/job-posters/signup'"
+              >
+                Job Poster
+              </button>
+              <button
+                type="button"
+                id="freelancer-btn"
+                class="w-1/2 border-2 border-[#6699A7] text-[#6699A7] py-2 text-sm rounded-[50px] hover:bg-[#6699A7]/10 transition"
+              >
+                Freelancer
+              </button>
+            </div>
+
+            <!-- Sign Up Button -->
+            <button
+            type="submit"
+            class="w-full py-2 text-white bg-[#6EB0B6] font-bold text-sm rounded-[50px] hover:bg-[#6EB0B6]/90 transition"
+          >
+            Sign Up
+          </button>
+
+            <!-- Admin Link -->
+            <div class="text-center mt-3">
+              <a href="#" class="text-black text-xs hover:underline"
+                >Admin? Click here</a
+              >
+            </div>
+          </form>
+        </div>
+        </div>
+
+        <div class="hidden sm:block w-1/2 h-full">
+          <img
+            src="/assets/freelancerSignup.gif"
+            alt="Signup Image"
+            class="object-cover w-full h-full rounded-l-2xl"
+          />
+        </div>
+      </div>
+    </main>
+
+    
+    <!-- Copyright Section -->
+    <div class="mt-6 text-center pb-3 bg-white">
+      <p class="text-black text-[16px] font-bold sm:text-sm">
+        © 2025 Vocation. All Rights Reserved.
+      </p>
+    </div>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const navbar = document.getElementById("navbar");
+
+      menuToggle.addEventListener("click", () => {
+        navbar.classList.toggle("hidden");
+      });
+
+    
+      function isSkillSelected(skill) {
+        const selectedSkills = selectedSkillsContainer.querySelectorAll("div");
+        return Array.from(selectedSkills).some((item) =>
+          item.textContent.includes(skill)
+        );
+      }
+
+      function removeSkill(skill) {
+        const skillItem = Array.from(selectedSkillsContainer.children).find(
+          (item) => item.textContent.includes(skill)
+        );
+        if (skillItem) {
+          selectedSkillsContainer.removeChild(skillItem);
+        }
+      }
+
+
+
+
+      const skillsDropdown = document.getElementById("skillsDropdown");
+const skillsList = document.getElementById("skillsList");
+const selectedSkillsContainer = document.getElementById("selectedSkillsContainer");
+
+let selectedSkills = [];
+
+
+skillsDropdown.addEventListener("click", () => {
+  skillsList.classList.toggle("hidden");
+});
+
+
+const skillItems = skillsList.querySelectorAll(".skill-item");
+skillItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    const skill = item.textContent;
+
+    if (!selectedSkills.includes(skill)) {
+      selectedSkills.push(skill);
+      const skillItem = document.createElement("div");
+      skillItem.className = "bg-[#6692A7] text-white rounded-lg px-3 py-1 text-sm flex items-center";
+      skillItem.innerHTML = `${skill} <button onclick="removeSkill('${skill}')" class="ml-2 text-white">&times;</button>`;
+      selectedSkillsContainer.appendChild(skillItem);
+      skillsList.classList.add("hidden");
+    }
+  });
+});
+
+
+function removeSkill(skill) {
+  selectedSkills = selectedSkills.filter(s => s !== skill);
+  const skillItem = Array.from(selectedSkillsContainer.children).find(
+    (item) => item.textContent.includes(skill)
+  );
+  if (skillItem) {
+    selectedSkillsContainer.removeChild(skillItem);
+  }
+}
+
+
+const signupForm = document.getElementById("signup-form");
+
+signupForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
+  const industry = document.getElementById("industry").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const phoneNumber = document.getElementById("phoneNumber").value.trim();
+  const resumeLink = document.getElementById("resumeLink").value.trim();
+  const description = document.getElementById("description").value.trim();
+
+
+
+  const requiredFields = { name, email, industry, location, phoneNumber, resumeLink, password };
+  for (const [key, value] of Object.entries(requiredFields)) {
+    if (!value) {
+      showToast(`You have not provided your ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`, "error");
+      return;
+    }
+  }
+
+  if (!selectedSkills || selectedSkills.length === 0) {
+    showToast("You have not provided your skills", "error");
+    return;
+  }
+
+  if (password.length < 6) {
+    showToast("Password must be at least 6 characters long", "error");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showToast("Passwords do not match", "error");
+    return;
+  }
+
+  try {
+    
+    const emailCheckResponse = await fetch(`/auth/check-email?email=${encodeURIComponent(email)}`);
+    
+    if (!emailCheckResponse.ok) {
+      const errorText = await emailCheckResponse.text(); 
+      showToast(errorText || "Email already in use", "error");
+      return;
+    }
+
+    const signupData = {
+      name,
+      email,
+      password,
+      skills: selectedSkills,
+      industry,
+      yearsOfExperience: 0,
+      resumeLink,
+      description,
+      links: [],
+      location,
+      phoneNumber,
+     
+    };
+
+   
+    const response = await fetch("/auth/freelancers/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signupData),
+    });
+
+    const responseText = await response.text(); 
+
+    if (response.ok) {
+      showToast("Signup successful!","success");
+      window.location.href = "/auth/freelancers/login";
+    } else {
+      showToast(responseText || "Signup failed. Please try again.", "error");
+    }
+  } catch (error) {
+    console.error("Error during signup:", error);
+    showToast("An error occurred. Please try again later.", "error");
+  }
+});
+
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="/scripts/toast.js"></script>
+    <script src="/scripts/tokens.js"></script>
+    <script src="/scripts/logout.js"></script>
+    <script src="/scripts/freelancer.js"></script>
+
+    <title>Freelancer Profile</title>
+  </head>
+  <body class="bg-white">
+    <!-- Top Navigation Bar -->
+    <header>
+      <nav
+        class="bg-white py-2 px-4 flex items-center justify-between shadow-md"
+      >
+        <!-- Company Name -->
+        <img
+          src="/assets/logo.png"
+          alt="Vocation Logo"
+          class="ml-[10px] h-[64px]"
+        />
+
+        <div class="flex space-x-8">
+          <!-- Home -->
+          <a href="/freelancers/dashboard" class="flex flex-col items-center">
+            <img src="../assets/homeIcon.png" alt="Home" class="h-6 w-6" />
+            <span class="text-sm text-black mt-1">Home</span>
+          </a>
+          <!-- Profile -->
+          <a href="/freelancers/profile" class="flex flex-col items-center">
+            <img src="../assets/userIcon.png" alt="Profile" class="h-6 w-6" />
+            <span class="text-sm text-gray-500 mt-1">Profile</span>
+          </a>
+          <!-- Logout -->
+          <a class="flex flex-col items-center" id="logout-button">
+            <img src="../assets/logoutIcon.png" alt="Logout" class="h-6 w-6" />
+            <span class="text-sm text-gray-500 mt-1">Logout</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="relative w-full h-[250px]">
+        <img
+          src="../assets/FreelancerBanner.png"
+          alt="Cover Image"
+          class="w-full h-full object-cover"
+        />
+
+        <!-- Content Overlay -->
+        <div
+          class="absolute inset-0 flex justify-between items-center px-10 py-8"
+        >
+          <!-- Left Content -->
+          <div class="flex flex-col space-y-4">
+            <!-- Circular Image and Freelancer Name -->
+            <div class="flex items-center space-x-4">
+              <img
+                src="/assets/applicant.png"
+                alt="Profile Picture"
+                class="w-[140px] h-[140px] rounded-full object-cover"
+              />
+
+              <!-- Freelancer Name -->
+              <div>
+                <h2
+                  class="text-black font-bold text-[40px] leading-none"
+                  th:text="${name}"
+                ></h2>
+              </div>
+            </div>
+
+            <!-- Industry and Location -->
+            <div class="flex flex-col space-y-2 mt-[-80px]">
+              <div class="flex items-center space-x-2">
+                <img
+                  src="../assets/suitcaseIcon.png"
+                  alt="Industry Icon"
+                  class="w-6 h-6"
+                />
+                <span
+                  class="text-[#6692A7] font-bold text-[16px]"
+                  th:text="${industry}"
+                ></span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <img
+                  src="../assets/mailIcon.png"
+                  alt="Industry Icon"
+                  class="w-6 h-6"
+                />
+                <span
+                  class="text-[#716D6D] font-bold text-[16px]"
+                  th:text="${email}"
+                ></span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <img
+                  src="../assets/LocationIcon.png"
+                  alt="Location Icon"
+                  class="w-6 h-6"
+                />
+                <span
+                  class="text-[#716D6D] font-bold text-[16px]"
+                  th:text="${location}"
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Content -->
+          <div class="text-left">
+            <h2 class="text-[#716D6D] font-bold text-[16px] hidden lg:block">
+              About
+            </h2>
+            <p
+              class="text-[#4b4b4b] text-[16px] font-light w-[500px] mt-2 hidden lg:block"
+              th:text="${description}"
+            >
+              Tell us about yourself! Update your profile to add an about
+              section
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white py-6">
+        <!-- Right Content -->
+        <div class="flex justify-end items-center space-x-4">
+          <button
+            onclick="openModal()"
+            class="flex items-center border bg-[#6692A7] rounded-full px-4 py-2 mr-4 text-white text-[16px] font-medium hover:bg-black transition"
+          >
+            Update Profile
+          </button>
+        </div>
+      </section>
+
+      <!-- Modal Content -->
+      <div
+        id="modal"
+        class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50 hidden py-10"
+      >
+        <div
+          class="bg-white w-[90%] p-6 rounded-lg shadow-lg space-y-6 relative md:w-[50%] max-w-[600px] px-6 py-4 max-h-full overflow-y-auto"
+        >
+          <button
+            onclick="closeModal()"
+            class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 transition"
+          >
+            X
+          </button>
+
+          <!-- Modal Header -->
+          <div class="flex items-center justify-center space-x-2 mb-2">
+            <h2 class="text-[20px] font-light text-black">Update Profile</h2>
+          </div>
+
+          <!-- Form -->
+          <form id="profileForm" class="bg-white rounded-lg shadow-lg">
+            <!-- Name -->
+            <div class="mb-4">
+              <label for="name" class="block text-sm font-bold mb-1"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                th:value="${name}"
+                required
+              />
+            </div>
+
+            <!-- Industry -->
+            <div class="mb-4">
+              <label for="industry" class="block text-sm font-bold mb-1"
+                >Industry</label
+              >
+              <select
+                id="industry"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                required
+              >
+                <option
+                  value="Software Development"
+                  th:selected="${industry == 'Software Development'}"
+                >
+                  Software Development
+                </option>
+                <option value="Design" th:selected="${industry == 'Design'}">
+                  Design
+                </option>
+                <option
+                  value="Marketing"
+                  th:selected="${industry == 'Marketing'}"
+                >
+                  Marketing
+                </option>
+                <option value="Finance" th:selected="${industry == 'Finance'}">
+                  Finance
+                </option>
+                <option
+                  value="Healthcare"
+                  th:selected="${industry == 'Healthcare'}"
+                >
+                  Healthcare
+                </option>
+                <option
+                  value="Education"
+                  th:selected="${industry == 'Education'}"
+                >
+                  Education
+                </option>
+                <option
+                  value="Construction"
+                  th:selected="${industry == 'Construction'}"
+                >
+                  Construction
+                </option>
+                <option
+                  value="E-Commerce"
+                  th:selected="${industry == 'E-Commerce'}"
+                >
+                  E-Commerce
+                </option>
+              </select>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+              <label for="description" class="block text-sm font-bold mb-1"
+                >Description</label
+              >
+              <textarea
+                id="description"
+                placeholder="Describe yourself"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                rows="4"
+                th:text="${description}"
+              ></textarea>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+              <label for="email" class="block text-sm font-bold mb-1"
+                >Email</label
+              >
+              <input
+                type="text"
+                id="email"
+                placeholder="Enter your email"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                required
+                th:value="${email}"
+              />
+            </div>
+
+            <!-- Location -->
+            <div class="mb-4">
+              <label for="location" class="block text-sm font-bold mb-1"
+                >Location</label
+              >
+              <input
+                type="text"
+                id="location"
+                placeholder="City, Country"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                th:value="${location}"
+              />
+            </div>
+
+            <div class="mb-2">
+              <div class="relative">
+                <div
+                  class="border border-gray-300 rounded-lg w-full p-2 mb-3 bg-white text-gray-700 text-sm flex justify-between items-center"
+                  id="skillsDropdown"
+                >
+                  <span>Select Skills</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3 w-3 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+
+                <div
+                  id="skillsList"
+                  class="absolute left-0 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden z-10 max-h-32 overflow-y-auto"
+                >
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    HTML
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    CSS
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    JavaScript
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    Python
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    Figma
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    Blender
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    React
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    Prototyping
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    Graphics Design
+                  </div>
+                  <div
+                    class="skill-item p-1 cursor-pointer hover:bg-[#6692A7] hover:text-white"
+                  >
+                    UX/UI design
+                  </div>
+                </div>
+              </div>
+
+              <input
+                id="skills"
+                name="skills"
+                type="hidden"
+                th:value="${skills}"
+              />
+
+              <!-- Selected Skills Container -->
+              <div
+                id="selectedSkillsContainer"
+                class="mt-2 flex flex-wrap gap-2"
+              ></div>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-4">
+              <label for="phoneNumber" class="block text-sm font-bold mb-1"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phoneNumber"
+                placeholder="Enter phone number"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                th:value="${phoneNumber}"
+              />
+            </div>
+
+            <!--  -->
+            <div class="mb-4">
+              <label for="experience" class="block text-sm font-bold mb-1"
+                >Experience</label
+              >
+              <input
+                type="text"
+                id="yearsOfExperience"
+                placeholder="Experience in years"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                th:value="${yearsOfExperience}"
+              />
+            </div>
+
+            <!-- Password and Confirm Password -->
+            <div class="mb-4">
+              <label for="password" class="block text-sm font-bold mb-1"
+                >Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                required
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="confirmPassword" class="block text-sm font-bold mb-1"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                required
+              />
+            </div>
+
+            <!-- Resume -->
+            <div class="mb-4">
+              <label for="resume" class="block text-sm font-bold mb-1"
+                >Updated Resume</label
+              >
+              <input
+                type="text"
+                id="resumeLink"
+                placeholder="Enter resume link"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                th:value="${resumeLink}"
+              />
+            </div>
+
+            <!-- Links -->
+            <div class="mb-4">
+              <label for="links" class="block text-sm font-bold mb-1"
+                >Links (comma-separated)</label
+              >
+              <input
+                type="text"
+                id="links"
+                placeholder="https://linkedin.com, https://github.com"
+                class="w-full border rounded-lg px-3 py-2 text-sm"
+                th:value="${#strings.arrayJoin(links, ', ')}"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#57DD70] text-white font-bold py-2 rounded-lg hover:bg-[#57DD70]/90 transition"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="flex flex-wrap justify-center gap-4 px-10 pb-10">
+        <div
+          th:each="skill : ${skills}"
+          class="skill-item border border-[#6699A7] px-4 py-2 text-black font-light text-[20px] text-center rounded-[50px]"
+        >
+          <span th:text="${skill}"></span>
+        </div>
+      </div>
+
+      <!-- Resume Sect -->
+      <div class="text-left mb-8 px-10">
+        <!-- Title -->
+        <h2 class="text-black font-light text-4xl mb-6">Resume</h2>
+
+        <!-- Link -->
+        <a
+          th:href="${resume}"
+          class="text-[#6699A7] font-semibold text-[16px]"
+          target="_blank"
+        >
+          Click here to View My Resume
+        </a>
+      </div>
+
+      <!--Experience -->
+      <div class="text-left mb-8 px-10">
+        <h2 class="text-black font-light text-4xl mb-6">
+          Experience - <span th:text="${experience}"></span> yrs
+        </h2>
+      </div>
+
+      <!-- Project Links Section -->
+      <div class="text-left mb-8 px-10">
+        <!-- Title - Past Work -->
+        <h2 class="text-black font-light text-4xl mb-6">Past Work</h2>
+
+        <div class="flex flex-wrap gap-6 px-10">
+          <th:block th:if="${#lists.isEmpty(links)}">
+            <p
+              style="
+                color: grey;
+                font-size: 16px;
+                text-align: center;
+                width: 100%;
+              "
+            >
+              Links to your past projects will appear here
+            </p>
+          </th:block>
+
+          <a
+            th:each="link, iterStat : ${links}"
+            th:href="${link}"
+            target="_blank"
+            style="
+              border: 2px solid #6eb0b6;
+              color: #6eb0b6;
+              font-weight: 300;
+              font-size: 20px;
+              padding: 8px;
+              border-radius: 8px;
+              text-align: center;
+              width: 100%;
+              transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out;
+            "
+            onmouseover="this.style.backgroundColor='#6EB0B6'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#6EB0B6';"
+          >
+            Project <span th:text="${iterStat.index + 1}"></span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-black py-8">
+      <div
+        class="grid grid-cols-5 gap-6 text-center text-[16px] font-bold text-white"
+      >
+        <!-- First Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >About Us</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Contact Us</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Privacy Policy</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Terms & Conditions</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >FAQs</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Blog</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Careers</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Support Center</a
+          >
+        </div>
+
+        <!-- Second Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Create a Profile</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Browse Jobs</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Apply for Jobs</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Update Availability</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >View Job Offers</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Search by Skills</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Job Seeker Dashboard</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >How It Works</a
+          >
+        </div>
+
+        <!-- Third Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Our Mission</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Our Vision</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Team</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Partners</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Media Kit</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Press Releases</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Investor Relations</a
+          >
+        </div>
+
+        <!-- Fourth Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Facebook</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Twitter</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >LinkedIn</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Instagram</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >YouTube</a
+          >
+        </div>
+
+        <!-- Fifth Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Contact Support</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Troubleshooting Guides</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Live Chat</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Community Forum</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Knowledge Base</a
+          >
+        </div>
+      </div>
+    </footer>
+    <!-- Copyright Section -->
+    <div class="mt-6 text-center pb-3 bg-white">
+      <p class="text-black text-[16px] font-bold sm:text-sm">
+        © 2025 Vocation. All Rights Reserved.
+      </p>
+    </div>
+
+    <script>
+      function openModal() {
+        document.getElementById("modal").classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("modal").classList.add("hidden");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const skillsDropdown = document.getElementById("skillsDropdown");
+        const skillsList = document.getElementById("skillsList");
+        const selectedSkillsContainer = document.getElementById(
+          "selectedSkillsContainer"
+        );
+        const skillsInput = document.getElementById("skills");
+
+        let skillsString = skillsInput.value.trim();
+        if (skillsString.startsWith("[") && skillsString.endsWith("]")) {
+          skillsString = skillsString.slice(1, -1);
+        }
+        let selectedSkills = skillsString ? skillsString.split(",") : [];
+
+        function isSkillSelected(skill) {
+          return selectedSkills.includes(skill);
+        }
+
+        function renderSelectedSkills() {
+          selectedSkillsContainer.innerHTML = "";
+          selectedSkills.forEach((skill) => {
+            const skillTag = document.createElement("div");
+            skillTag.classList.add(
+              "bg-[#6692A7]",
+              "text-white",
+              "px-2",
+              "py-1",
+              "rounded",
+              "flex",
+              "items-center",
+              "gap-1"
+            );
+
+            const skillText = document.createElement("span");
+            skillText.textContent = skill;
+
+            const removeButton = document.createElement("span");
+            removeButton.textContent = "✕";
+            removeButton.classList.add(
+              "cursor-pointer",
+              "text-sm",
+              "font-bold",
+              "ml-2"
+            );
+
+            removeButton.addEventListener("click", function () {
+              removeSkill(skill);
+            });
+
+            skillTag.appendChild(skillText);
+            skillTag.appendChild(removeButton);
+            selectedSkillsContainer.appendChild(skillTag);
+          });
+
+          skillsInput.value = selectedSkills.join(",");
+        }
+
+        function toggleSkill(skill) {
+          if (isSkillSelected(skill)) {
+            selectedSkills = selectedSkills.filter((s) => s !== skill);
+          } else {
+            selectedSkills.push(skill);
+          }
+          renderSelectedSkills();
+        }
+
+        function removeSkill(skill) {
+          selectedSkills = selectedSkills.filter((s) => s !== skill);
+          renderSelectedSkills();
+        }
+
+        skillsList.querySelectorAll(".skill-item").forEach((item) => {
+          item.addEventListener("click", function () {
+            toggleSkill(item.textContent.trim());
+          });
+        });
+
+        skillsDropdown.addEventListener("click", function () {
+          skillsList.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", function (event) {
+          if (
+            !skillsDropdown.contains(event.target) &&
+            !skillsList.contains(event.target)
+          ) {
+            skillsList.classList.add("hidden");
+          }
+        });
+
+        renderSelectedSkills();
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("profileForm");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value.trim();
+          const industry = document.getElementById("industry").value.trim();
+          const description = document
+            .getElementById("description")
+            .value.trim();
+          const email = document.getElementById("email").value.trim();
+          const location = document.getElementById("location").value.trim();
+          const phoneNumber = document
+            .getElementById("phoneNumber")
+            .value.trim();
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const resumeLink = document.getElementById("resumeLink").value.trim();
+          const yearsOfExperience = document
+            .getElementById("yearsOfExperience")
+            .value.trim();
+          const skills = document
+            .getElementById("skills")
+            .value.split(",")
+            .map((skill) => skill.trim())
+            .filter((skill) => skill);
+          const links = document
+            .getElementById("links")
+            .value.split(",")
+            .map((link) => link.trim())
+            .filter((link) => link);
+
+          const requiredFields = {
+            name,
+            email,
+            industry,
+            location,
+            phoneNumber,
+            resumeLink,
+          };
+          for (const [key, value] of Object.entries(requiredFields)) {
+            if (!value) {
+              showToast(
+                `You have not provided your ${key
+                  .replace(/([A-Z])/g, " $1")
+                  .toLowerCase()}`,
+                "error"
+              );
+              return;
+            }
+          }
+
+          if (skills.length === 0) {
+            showToast("You have not provided your skills", "error");
+            return;
+          }
+
+          if (isNaN(yearsOfExperience) || yearsOfExperience < 0) {
+            showToast(
+              "Years of experience must be a valid non-negative number",
+              "error"
+            );
+            return;
+          }
+
+          if (password.length < 6) {
+            showToast("Password must be at least 6 characters long", "error");
+            return;
+          }
+
+          if (password !== confirmPassword) {
+            showToast("Passwords do not match", "error");
+            return;
+          }
+
+          const payload = {
+            name,
+            email,
+            password,
+            industry,
+            description,
+            location,
+            resumeLink,
+            yearsOfExperience: parseInt(yearsOfExperience, 10),
+            phoneNumber,
+            links,
+            skills,
+          };
+
+          try {
+            await sendProfileUpdateRequest("/freelancers/update", payload);
+            showToast("Profile updated successfully!", "success");
+          } catch (error) {
+            console.error("Error updating profile:", error);
+            showToast("An error occurred. Please try again later.", "error");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

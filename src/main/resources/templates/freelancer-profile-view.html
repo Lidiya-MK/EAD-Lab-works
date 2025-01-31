@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <script src="/scripts/logout.js"></script>
+    <title>Applicant Profile</title>
+  </head>
+  <body class="bg-white">
+    <!-- Top Navigation Bar -->
+    <header>
+      <nav
+        class="bg-white py-2 px-4 flex items-center justify-between shadow-md"
+      >
+        <!-- Company Name -->
+        <img
+          src="/assets/logo.png"
+          alt="Vocation Logo"
+          class="ml-[10px] h-[64px]"
+        />
+
+        <div class="flex space-x-8">
+          <!-- Home -->
+          <a href="/job-posters/dashboard" class="flex flex-col items-center">
+            <img src="/assets/homeIcon.png" alt="Home" class="h-6 w-6" />
+            <span class="text-sm text-black mt-1">Home</span>
+          </a>
+          <!-- Profile -->
+          <a href="/job-posters/profile" class="flex flex-col items-center">
+            <img src="/assets/userIcon.png" alt="Profile" class="h-6 w-6" />
+            <span class="text-sm text-gray-500 mt-1">Profile</span>
+          </a>
+          <!-- Logout -->
+          <a class="flex flex-col items-center" id="logout-button">
+            <img src="/assets/logoutIcon.png" alt="Logout" class="h-6 w-6" />
+            <span class="text-sm text-gray-500 mt-1">Logout</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="relative w-full h-[250px]">
+        <img
+          src="/assets/FreelancerBannerjp.png"
+          alt="Cover Image"
+          class="w-full h-full object-cover custom-blur"
+        />
+        <div
+          class="absolute inset-0 flex justify-between items-center px-10 py-8"
+        >
+          <!-- Left Content -->
+          <div class="flex flex-col space-y-4">
+            <!-- Circular Image and Freelancer Name -->
+            <div class="flex items-center space-x-4">
+              <img
+                src="/assets/applicantjp.png"
+                alt="Profile Picture"
+                class="w-[140px] h-[140px] rounded-full object-cover"
+              />
+
+              <!-- Freelancer Name -->
+              <div>
+                <h2
+                  class="text-black font-bold text-[40px] leading-none"
+                  th:text="${name}"
+                ></h2>
+              </div>
+            </div>
+
+            <!-- Industry and Location -->
+            <div class="flex flex-col space-y-2 mt-[-80px]">
+              <div class="flex items-center space-x-2">
+                <img
+                  src="/assets/suitcaseIcon.png"
+                  alt="Industry Icon"
+                  class="w-6 h-6"
+                />
+                <span
+                  class="text-[#F0823E] font-bold text-[16px]"
+                  th:text="${industry}"
+                ></span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <img
+                  src="/assets/mailIcon.png"
+                  alt="Industry Icon"
+                  class="w-6 h-6"
+                />
+                <span
+                  class="text-[#716D6D] font-bold text-[16px]"
+                  th:text="${email}"
+                ></span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <img
+                  src="/assets/LocationIcon.png"
+                  alt="Location Icon"
+                  class="w-6 h-6"
+                />
+                <span
+                  class="text-[#716D6D] font-bold text-[16px]"
+                  th:text="${location}"
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Content -->
+          <div class="text-left">
+            <h2 class="text-[#716D6D] font-bold text-[16px] hidden lg:block">
+              About
+            </h2>
+            <p
+              class="text-[#4b4b4b] text-[16px] font-light w-[500px] mt-2 hidden lg:block"
+              th:text="${description}"
+            >
+              Tell us about yourself! Update your profile to add an about
+              section
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <h2 class="text-black font-light text-4xl mb-6 text-center">My Skills</h2>
+
+      <!-- Skills Section -->
+      <div class="flex flex-wrap justify-center gap-4 px-10 pb-10">
+        <div
+          th:each="skill : ${skills}"
+          class="skill-item border border-[#F0823E] px-4 py-2 text-black font-light text-[20px] text-center rounded-[50px]"
+        >
+          <span th:text="${skill}"></span>
+        </div>
+      </div>
+
+      <!-- Resume Sect -->
+      <div class="text-left mb-8 px-10">
+        <!-- Title -->
+        <h2 class="text-black font-light text-4xl mb-6">Resume</h2>
+
+        <!-- Link -->
+        <a
+          th:href="${resume}"
+          class="text-[#F0823E] font-semibold text-[16px]"
+          target="_blank"
+        >
+          Click here to View My Resume
+        </a>
+      </div>
+
+      <!--Experience -->
+      <div class="text-left mb-8 px-10">
+        <h2 class="text-black font-light text-4xl mb-6">
+          Experience - <span th:text="${experience}"></span> yrs
+        </h2>
+      </div>
+
+      <!-- Project Links Section -->
+      <div class="text-left mb-8 px-10">
+        <!-- Title - Past Work -->
+        <h2 class="text-black font-light text-4xl mb-6">Past Work</h2>
+
+        <div class="flex flex-wrap gap-6 px-10">
+          <th:block th:if="${#lists.isEmpty(links)}">
+            <p
+              style="
+                color: grey;
+                font-size: 16px;
+                text-align: center;
+                width: 100%;
+              "
+            >
+              The applicant hasn't posted their past work yet
+            </p>
+          </th:block>
+
+          <a
+            th:each="link, iterStat : ${links}"
+            th:href="${link}"
+            target="_blank"
+            style="
+              border: 2px solid #f0823e;
+              color: #f0823e;
+              font-weight: 300;
+              font-size: 20px;
+              padding: 8px;
+              border-radius: 8px;
+              text-align: center;
+              width: 100%;
+              transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out;
+            "
+            onmouseover="this.style.backgroundColor='#F0823E'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#F0823E';"
+          >
+            Project <span th:text="${iterStat.index + 1}"></span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-black py-8">
+      <div
+        class="grid grid-cols-5 gap-6 text-center text-[16px] font-bold text-white"
+      >
+        <!-- First Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >About Us</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Contact Us</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Privacy Policy</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Terms & Conditions</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >FAQs</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Blog</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Careers</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Support Center</a
+          >
+        </div>
+
+        <!-- Second Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Create a Profile</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Browse Jobs</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Apply for Jobs</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Update Availability</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >View Job Offers</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Search by Skills</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Job Seeker Dashboard</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >How It Works</a
+          >
+        </div>
+
+        <!-- Third Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Our Mission</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Our Vision</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Team</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Partners</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Media Kit</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Press Releases</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Investor Relations</a
+          >
+        </div>
+
+        <!-- Fourth Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Facebook</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Twitter</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >LinkedIn</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Instagram</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >YouTube</a
+          >
+        </div>
+
+        <!-- Fifth Column -->
+        <div class="flex flex-col gap-4">
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Contact Support</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Troubleshooting Guides</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Live Chat</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#F0823E] text-white text-sm sm:text-base"
+            >Community Forum</a
+          >
+          <a
+            href="#"
+            class="hover:text-[#6EB0B6] text-white text-sm sm:text-base"
+            >Knowledge Base</a
+          >
+        </div>
+      </div>
+    </footer>
+    <!-- Copyright Section -->
+    <div class="mt-6 text-center pb-3 bg-white">
+      <p class="text-black text-[16px] font-bold sm:text-sm">
+        © 2025 Vocation. All Rights Reserved.
+      </p>
+    </div>
+  </body>
+</html>
