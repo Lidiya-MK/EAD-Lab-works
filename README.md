@@ -15,12 +15,12 @@ Vocation is a job portal application designed to connect Freelancers and Job-pos
 
 1. Clone the repository:
 
-   Use the foolowing link to clone this repository to your machine.
+   Use the following link to clone this repository to your machine.
 
    ```bash
     git clone https://github.com/Lidiya-MK/EAD-Lab-works.git
 
-2. Swicth to the project folder
+2. Switch to the project folder
 
    ```bash
    cd EAD-Lab-works
